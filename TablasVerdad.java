@@ -44,8 +44,58 @@ public class TablasVerdad {
        
        String[][] tablas;
        double lol = Math.pow(2, numeroVariables);
+        int veces = 1;
 
         tablas = new String[vars.length][(int) lol];
+        
+        for(int i = (int)numeroVariables; i>0; i--){
+        
+             int temp = veces;
+            int cont = 0;
+            for(int j = 0; j<lol; j++){
+                
+                if(veces == 1){
+                
+                    if(j<temp){
+                        tablas[i-1][j] = "F";
+                    }
+                    else{
+                        tablas[i-1][j] = "T";
+                        temp = j+2;
+                    }
+                
+                }else{
+                
+                    if(temp%(j+1) == 0){
+                        tablas[i-1][j] = "F";
+                    }
+                    else{
+                        tablas[i-1][j] = "T";
+                        
+                    }
+                    
+                }
+                
+             
+                
+            }//for
+            
+            veces = veces * 2;
+            
+        }//for
+        
+        for(int i = vars.length; i>0; i--){
+            
+            for(int j = 0; j<tablas[0].length; j++){
+                
+                System.out.print(tablas[i-1][j]);
+                
+            }//for
+            System.out.println();
+            
+            veces = veces * 2;
+            
+        }//for
         
        
     }//main
