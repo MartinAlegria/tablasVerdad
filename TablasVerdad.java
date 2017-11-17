@@ -29,76 +29,75 @@ public class TablasVerdad {
         
             if(tieneMayus){
                 ventana.showMessageDialog(null, " Una o más de tus variables tiene mayuscula \n Intentalo de nuevo", "Tablas de Verdad", JOptionPane.ERROR_MESSAGE);
-            }
+            }//if
             else{
                 up = false;
-            }
+            }//else
            
        }while(up);
        
        String[] vars = variables.split(",");
-       double numeroVariables = vars.length;
+       int numeroVariables = vars.length;
        
-       ventana.showMessageDialog(null, " Tienes " + numeroVariables + " variables \n "+ variables, "Tablas de verdad", JOptionPane.INFORMATION_MESSAGE );
-       
-       
-       String[][] tablas;
-       double lol = Math.pow(2, numeroVariables);
-        int veces = 1;
+       ventana.showMessageDialog(null, " Tienes " + numeroVariables + " variables \n "+ variables, "Tablas de Verdad", JOptionPane.INFORMATION_MESSAGE );
 
-        tablas = new String[vars.length][(int) lol];
-        
-        for(int i = (int)numeroVariables; i>0; i--){
-        
-             int temp = veces;
-            int cont = 0;
-            for(int j = 0; j<lol; j++){
-                
-                if(veces == 1){
-                
-                    if(j<temp){
-                        tablas[i-1][j] = "F";
-                    }
-                    else{
-                        tablas[i-1][j] = "T";
-                        temp = j+2;
-                    }
-                
-                }else{
-                
-                    if(temp%(j+1) == 0){
-                        tablas[i-1][j] = "F";
-                    }
-                    else{
-                        tablas[i-1][j] = "T";
-                        
-                    }
-                    
-                }
-                
-             
-                
-            }//for
-            
-            veces = veces * 2;
-            
+
+        for (int i=0 ;i!=(1<<numeroVariables);i++) {
+
+            String binario = Integer.toBinaryString(i);
+
+            while (binario.length() != numeroVariables) {
+                binario = '0'+ binario;
+            }//while
+
+            tabla += binario+ "\n"; ///ESTA ES LA TABLA *******************************************************************************
         }//for
-        
-        for(int i = vars.length; i>0; i--){
-            
-            for(int j = 0; j<tablas[0].length; j++){
-                
-                System.out.print(tablas[i-1][j]);
-                
-            }//for
-            System.out.println();
-            
-            veces = veces * 2;
-            
+
+        String[] comp = new String[vars.length + 6];
+        String[] ops = {"&","|","!","->","<->","(",")"};
+
+        for(int i = 0; i<comp.length; i++){
+
+            if(i<vars.length){
+                comp[i] = vars[i];
+            }//if
+            else{
+                comp[i] = ops[i-vars.length];
+            }
+
         }//for
-        
-       
+
+        String funcion = ventana.showInputDialog(null, "Escribe tu función utilizando tus variables " + "\n " + variables + "\n Y utilizando operadores binarios y paréntesis \n AND = & \n OR = | \n NOT = ! \n IF-THEN = -> \n IFF = <->" , " Tablas de Verdad", JOptionPane.INFORMATION_MESSAGE);
+
+        boolean[] check = new boolean[vars.length];
+        boolean  varCheck = true;
+
+        for(int i = 0; i<vars.length; i++){
+            if(funcion.contains(vars[i])){
+                check[i] = true;
+            }else{
+                check[i] = false;
+            }
+
+        }//ofr
+
+        for(int i=0; i<check.length; i++){
+
+            if(check[i]){
+                varCheck = true;
+            }else{
+                varCheck = false;
+                break;
+            }
+
+        }//for
+
+        if(varCheck){
+            System.out.println("YUP");} else { System.out.println("NAH");}
+
+
     }//main
-    
+
+
 }
 //class
